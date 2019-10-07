@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/react-csv-reader/static/css/main.6e666289.chunk.css",
+    "main.js": "/react-csv-reader/static/js/main.dd8419bc.chunk.js",
+    "main.js.map": "/react-csv-reader/static/js/main.dd8419bc.chunk.js.map",
+    "runtime-main.js": "/react-csv-reader/static/js/runtime-main.11bc9cd1.js",
+    "runtime-main.js.map": "/react-csv-reader/static/js/runtime-main.11bc9cd1.js.map",
+    "static/js/2.054f0375.chunk.js": "/react-csv-reader/static/js/2.054f0375.chunk.js",
+    "static/js/2.054f0375.chunk.js.map": "/react-csv-reader/static/js/2.054f0375.chunk.js.map",
+    "index.html": "/react-csv-reader/index.html",
+    "precache-manifest.3ee7de2dc2029cccbdd930ea26975286.js": "/react-csv-reader/precache-manifest.3ee7de2dc2029cccbdd930ea26975286.js",
+    "service-worker.js": "/react-csv-reader/service-worker.js",
+    "static/css/main.6e666289.chunk.css.map": "/react-csv-reader/static/css/main.6e666289.chunk.css.map"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.11bc9cd1.js",
+    "static/js/2.054f0375.chunk.js",
+    "static/css/main.6e666289.chunk.css",
+    "static/js/main.dd8419bc.chunk.js"
+  ]
+}

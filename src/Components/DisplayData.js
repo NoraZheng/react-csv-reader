@@ -26,6 +26,7 @@ class DisplayData extends Component {
 			return row.length === headers.length;
 		});
 
+		// if current page number exceeds the new max page number, go to the new max page
 		this.setState({ data: cleanData, headers: headers }, () => {
 			if (this.state.pageNum < this.calcMaxPage()) {
 				this.getPage(this.state.pageNum);
@@ -102,6 +103,7 @@ class DisplayData extends Component {
 		//when new csv file is uploaded
 		if (this.props.data !== prevProps.data) {
 			this.handleData(this.props.data);
+			this.sortData('Id', true);
 		}
 	}
 
