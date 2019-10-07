@@ -8,10 +8,15 @@ import './App.css';
 class App extends Component {
 	constructor() {
 		super();
-		this.state = {};
+		this.state = {
+			csvData: [],
+			displayData: false
+		};
 	}
 
-	handleData = () => {};
+	handleData = data => {
+		this.setState({ csvData: data, displayData: true });
+	};
 	handleError = () => {
 		alert('Something went wrong');
 	};
@@ -26,7 +31,11 @@ class App extends Component {
 					onError={this.handleError}
 					inputId='upload'
 				/>
-				<DisplayData />
+				{this.state.displayData ? (
+					<DisplayData data={this.state.csvData} />
+				) : (
+					<p>your CSV will be shown here</p>
+				)}
 				<Footer />
 			</div>
 		);
