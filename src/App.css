@@ -60,6 +60,7 @@ th {
 	position: sticky;
 	background: #f77487;
 	top: 0;
+	text-transform: uppercase;
 }
 td {
 	border: 1px dotted #191919;

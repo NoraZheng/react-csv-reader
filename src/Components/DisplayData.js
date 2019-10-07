@@ -162,7 +162,7 @@ class DisplayData extends Component {
 											className='header'
 											id={`header${header.replace(/\s/g, '')}`}
 											key={`header${index}`}>
-											{header}
+											{header.replace(/_/g, ' ')}
 											<div className='buttons'>
 												<button
 													onClick={() => {
