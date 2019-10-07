@@ -159,20 +159,20 @@ class DisplayData extends Component {
 									return (
 										<th
 											className='header'
-											id={`header${header}`}
+											id={`header${header.replace(/\s/g, '')}`}
 											key={`header${index}`}>
 											{header}
 											<div className='buttons'>
 												<button
 													onClick={() => {
-														this.sortData(header, true);
+														this.sortData(header.replace(/\s/g, ''), true);
 													}}
 													className='sort'>
 													<span className='visuallyHidden'>Ascending</span>▲
 												</button>
 												<button
 													onClick={() => {
-														this.sortData(header, false);
+														this.sortData(header.replace(/\s/g, ''), false);
 													}}
 													className='sort'>
 													<span className='visuallyHidden'>Descending</span>▼
@@ -189,7 +189,11 @@ class DisplayData extends Component {
 									<tr>
 										{row.map((value, index) => {
 											return (
-												<td className={`${this.state.headers[index]}`}>
+												<td
+													className={`${this.state.headers[index].replace(
+														/\s/g,
+														''
+													)}`}>
 													{value}
 												</td>
 											);
