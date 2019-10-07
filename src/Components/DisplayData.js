@@ -7,10 +7,16 @@ class DisplayData extends Component {
 			currentPage: [],
 			data: [],
 			headers: [],
+
 			pageNum: 1,
 			rowsPerPage: 20
 		};
 	}
+
+	calcMaxPage = () => {
+		//calculating the max page number
+		return Math.ceil((this.state.data.length - 1) / this.state.rowsPerPage);
+	};
 
 	handleData = data => {
 		//the first element is an array of headers like id, names
@@ -34,7 +40,12 @@ class DisplayData extends Component {
 		// show only certain number of rows based on user's preference
 		let rowsPerPage = e.target.value;
 		this.setState({ rowsPerPage: rowsPerPage }, () => {
-			this.getCurrentPage(this.state.pageNum);
+			// if current page number exceeds the new max page number, go to the new max page
+			if (this.state.pageNum < this.calcMaxPage()) {
+				this.getCurrentPage(this.state.pageNum);
+			} else {
+				this.getCurrentPage(this.calcMaxPage());
+			}
 		});
 	};
 
@@ -55,6 +66,39 @@ class DisplayData extends Component {
 					</select>
 					rows per page
 				</label>
+				{/* if already at first page, disable prev button */}
+				{this.state.pageNum === 1 ? (
+					<button className='prevPage' disabled>
+						&lt; <span className='visuallyHidden'>previous page</span>
+					</button>
+				) : (
+					<button
+						className='prevPage'
+						onClick={() => {
+							this.getCurrentPage(this.state.pageNum - 1);
+						}}>
+						&lt; <span className='visuallyHidden'>previous page</span>
+					</button>
+				)}
+
+				<label htmlFor='pageNum'>
+					<span className='visuallyHidden'>current page</span>
+					{this.state.pageNum}
+				</label>
+
+				{this.state.pageNum === this.calcMaxPage() ? (
+					<button className='nextPage' disabled>
+						&gt; <span className='visuallyHidden'>next page</span>
+					</button>
+				) : (
+					<button
+						className='prevPage'
+						onClick={() => {
+							this.getCurrentPage(this.state.pageNum + 1);
+						}}>
+						&gt; <span className='visuallyHidden'>next page</span>
+					</button>
+				)}
 
 				<table>
 					<thead>
