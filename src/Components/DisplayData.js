@@ -90,6 +90,7 @@ class DisplayData extends Component {
 			} else {
 				this.getPage(this.calcMaxPage());
 			}
+			this.sortData('Id', true);
 		});
 	};
 
