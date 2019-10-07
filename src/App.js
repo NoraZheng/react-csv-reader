@@ -1,26 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
+import Header from './Components/Header';
+import CSVReader from 'react-csv-reader';
+import DisplayData from './Components/DisplayData';
+import Footer from './Components/Footer';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+	constructor() {
+		super();
+		this.state = {};
+	}
+
+	handleData = () => {};
+	handleError = () => {
+		alert('Something went wrong');
+	};
+	render() {
+		return (
+			<div className='App'>
+				<Header />
+				<CSVReader
+					cssClass='csv-reader-input'
+					label='Upload a .CSV file'
+					onFileLoaded={this.handleData}
+					onError={this.handleError}
+					inputId='upload'
+				/>
+				<DisplayData />
+				<Footer />
+			</div>
+		);
+	}
 }
 
 export default App;
