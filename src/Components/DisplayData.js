@@ -7,16 +7,12 @@ class DisplayData extends Component {
 			currentPage: [],
 			data: [],
 			headers: [],
-
 			pageNum: 1,
 			rowsPerPage: 20
 		};
 	}
 
 	calcMaxPage = () => {
-		console.log(
-			Math.ceil((this.state.data.length - 1) / this.state.rowsPerPage)
-		);
 		//calculating the max page number
 		return Math.ceil((this.state.data.length - 1) / this.state.rowsPerPage);
 	};
@@ -54,22 +50,19 @@ class DisplayData extends Component {
 		const rows = tbody.rows;
 		let unsorted = true;
 		// loop until no sorting to be done
-
 		while (unsorted) {
-			//start by saying: no switching is done:
+			//start by saying no sorting is done:
 			unsorted = false;
 
-			/*Loop through all table rows (except the
-    first, which contains table headers):*/
+			//Loop through all tbody rows
 			for (let r = 0; r < rows.length - 1; r++) {
-				//start by saying there should be no switching:
-
-				/*Get the two elements you want to compare,
-      one from current row and one from the next:*/
+				// getting the two values to be compared, one from the current row, one from the next row
 				const v1 = rows[r].querySelector(`.${column}`).innerHTML;
 				const v2 = rows[r + 1].querySelector(`.${column}`).innerHTML;
 
-				//check if the two rows should switch place:
+				//check if the two rows should switch place, based on sorting order
+				//if both values are numbers, compared by numerical value
+				//for strings, follow localeCompare() rules
 				if (
 					ascending
 						? !isNaN(parseFloat(v1)) && !isNaN(parseFloat(v2))
@@ -79,12 +72,14 @@ class DisplayData extends Component {
 						? parseFloat(v1) < parseFloat(v2)
 						: v1 < v2
 				) {
+					// insert the sorted rows to tbody
 					tbody.insertBefore(rows[r + 1], rows[r]);
 					unsorted = true;
 				}
 			}
 		}
 	};
+
 	selectRowsPerPage = e => {
 		// show only certain number of rows based on user's preference
 		let rowsPerPage = e.target.value;

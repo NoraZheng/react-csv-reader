@@ -5,12 +5,29 @@ html {
 body {
 	text-align: center;
 	overflow: hidden;
+	color: #191919;
+}
+.App {
 	display: flex;
 	height: 100vh;
 	flex-direction: column;
 	justify-content: space-between;
 	align-items: center;
-	color: #191919;
+}
+h1 {
+	margin: 10px auto 0;
+}
+.csv-input {
+	text-align: center;
+	padding: 5px;
+}
+.box {
+	height: 70vh;
+	border: 1px dotted #191919;
+	width: 95%;
+}
+select {
+	margin: 0 5px;
 }
 .nav {
 	background-color: #f77487;
@@ -20,13 +37,15 @@ body {
 }
 
 .scroll {
-	margin-top: 1rem;
-	width: 100vw;
-	height: 75vh;
+	margin-top: 5px;
+
+	width: 95vw;
+	height: 78vh;
 	overflow: auto;
 }
 
 table {
+	border: 1px dotted #191919;
 	text-align: left;
 	overflow: auto;
 	height: 100px;
@@ -60,7 +79,19 @@ tr:nth-child(even) {
 }
 .sort:hover,
 .sort:focus,
-.nav:hover,
-.nav:focus {
+.nav:not([disabled]):hover,
+.nav:not([disabled]):focus {
 	color: #f5e7e5;
+}
+
+footer p {
+	margin: 5px;
+}
+
+footer a {
+	color: #191919;
+}
+footer a:hover,
+footer a:focus {
+	font-weight: 700;
 }

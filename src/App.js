@@ -25,7 +25,7 @@ class App extends Component {
 			<div className='App'>
 				<Header />
 				<CSVReader
-					cssClass='csv-reader-input'
+					cssClass='csvInput'
 					label='Upload a .CSV file'
 					onFileLoaded={this.handleData}
 					onError={this.handleError}
@@ -34,7 +34,9 @@ class App extends Component {
 				{this.state.displayData ? (
 					<DisplayData data={this.state.csvData} />
 				) : (
-					<p>your CSV will be shown here</p>
+					<div className='box'>
+						<p>Your CSV data will be displayed here</p>
+					</div>
 				)}
 				<Footer />
 			</div>
