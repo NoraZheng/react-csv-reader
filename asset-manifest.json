@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/react-csv-reader/static/css/main.6e666289.chunk.css",
-    "main.js": "/react-csv-reader/static/js/main.f010d433.chunk.js",
-    "main.js.map": "/react-csv-reader/static/js/main.f010d433.chunk.js.map",
+    "main.css": "/react-csv-reader/static/css/main.ac777b74.chunk.css",
+    "main.js": "/react-csv-reader/static/js/main.0e5f65b9.chunk.js",
+    "main.js.map": "/react-csv-reader/static/js/main.0e5f65b9.chunk.js.map",
     "runtime-main.js": "/react-csv-reader/static/js/runtime-main.11bc9cd1.js",
     "runtime-main.js.map": "/react-csv-reader/static/js/runtime-main.11bc9cd1.js.map",
     "static/js/2.054f0375.chunk.js": "/react-csv-reader/static/js/2.054f0375.chunk.js",
     "static/js/2.054f0375.chunk.js.map": "/react-csv-reader/static/js/2.054f0375.chunk.js.map",
     "index.html": "/react-csv-reader/index.html",
-    "precache-manifest.4a03a8f4debc5dc0c32f861542488bcd.js": "/react-csv-reader/precache-manifest.4a03a8f4debc5dc0c32f861542488bcd.js",
+    "precache-manifest.9a7a056c1540acc72172840ff0f6d837.js": "/react-csv-reader/precache-manifest.9a7a056c1540acc72172840ff0f6d837.js",
     "service-worker.js": "/react-csv-reader/service-worker.js",
-    "static/css/main.6e666289.chunk.css.map": "/react-csv-reader/static/css/main.6e666289.chunk.css.map"
+    "static/css/main.ac777b74.chunk.css.map": "/react-csv-reader/static/css/main.ac777b74.chunk.css.map"
   },
   "entrypoints": [
     "static/js/runtime-main.11bc9cd1.js",
     "static/js/2.054f0375.chunk.js",
-    "static/css/main.6e666289.chunk.css",
-    "static/js/main.f010d433.chunk.js"
+    "static/css/main.ac777b74.chunk.css",
+    "static/js/main.0e5f65b9.chunk.js"
   ]
 }
