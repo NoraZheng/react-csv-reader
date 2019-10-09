@@ -1,215 +1,229 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 class DisplayData extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			currentPage: [],
-			data: [],
-			headers: [],
-			pageNum: 1,
-			rowsPerPage: 20
-		};
-	}
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentPage: [],
+      data: [],
+      headers: [],
+      pageNum: 1,
+      rowsPerPage: 20
+    };
+  }
 
-	calcMaxPage = () => {
-		//calculating the max page number
-		return Math.ceil((this.state.data.length - 1) / this.state.rowsPerPage);
-	};
+  calcMaxPage = () => {
+    //calculating the max page number
+    return Math.ceil((this.state.data.length - 1) / this.state.rowsPerPage);
+  };
 
-	handleData = data => {
-		//the first element of data array is an array of headers like id, names
-		const headers = data.shift();
+  handleData = data => {
 
-		// clean up dirty data, filter out rows with missing data
-		const cleanData = this.props.data.filter(row => {
-			return row.length === headers.length;
-		});
+    const { data: propsData } = this.props;
+    //the first element of data array is an array of headers like id, names
+    const headers = data.shift();
 
-		// if current page number exceeds the new max page number, go to the new max page
-		this.setState({ data: cleanData, headers: headers }, () => {
-			if (this.state.pageNum < this.calcMaxPage()) {
-				this.getPage(this.state.pageNum);
-			} else {
-				this.getPage(this.calcMaxPage());
-			}
-		});
-	};
+    // clean up dirty data, filter out rows with missing data
+    const cleanData = propsData.filter(row => {
+      return row.length === headers.length;
+    });
 
-	getPage = pageNum => {
-		//pagination based on the current page number and rows to show per page
-		//get a slice of the csv data
-		const currentPage = this.state.data.slice(
-			(pageNum - 1) * this.state.rowsPerPage,
-			pageNum * this.state.rowsPerPage
-		);
-		this.setState({ currentPage: currentPage, pageNum: pageNum });
-	};
+    // if current page number exceeds the new max page number, go to the new max page
 
-	sortData = (column, ascending) => {
-		const tbody = document.getElementById('tbody');
-		const rows = tbody.rows;
-		let unsorted = true;
-		// loop until no sorting to be done
-		while (unsorted) {
-			//start by saying no sorting is done:
-			unsorted = false;
+    this.setState({ data: cleanData, headers }, () => {
 
-			//Loop through all tbody rows
-			for (let r = 0; r < rows.length - 1; r++) {
-				// getting the two values to be compared, one from the current row, one from the next row
-				const v1 = rows[r].querySelector(`.${column}`).innerHTML;
-				const v2 = rows[r + 1].querySelector(`.${column}`).innerHTML;
+      const { pageNum } = this.state;
+      if (pageNum < this.calcMaxPage()) {
+        this.getPage(pageNum);
+      } else {
+        this.getPage(this.calcMaxPage());
+      }
+    });
+  };
 
-				//check if the two rows should switch place, based on sorting order
-				//if both values are numbers, compared by numerical value
-				//for strings, follow localeCompare() rules
-				if (
-					ascending
-						? !isNaN(parseFloat(v1)) && !isNaN(parseFloat(v2))
-							? parseFloat(v1) > parseFloat(v2)
-							: v1 > v2
-						: !isNaN(parseFloat(v1)) && !isNaN(parseFloat(v2))
-						? parseFloat(v1) < parseFloat(v2)
-						: v1 < v2
-				) {
-					// insert the sorted rows to tbody
-					tbody.insertBefore(rows[r + 1], rows[r]);
-					unsorted = true;
-				}
-			}
-		}
-	};
+  getPage = pageNum => {
 
-	selectRowsPerPage = e => {
-		// show only certain number of rows based on user's preference
-		let rowsPerPage = e.target.value;
-		this.setState({ rowsPerPage: rowsPerPage }, () => {
-			// if current page number exceeds the new max page number, go to the new max page
-			if (this.state.pageNum < this.calcMaxPage()) {
-				this.getPage(this.state.pageNum);
-			} else {
-				this.getPage(this.calcMaxPage());
-			}
-			this.sortData('Id', true);
-		});
-	};
+    const { data, rowsPerPage } = this.state;
+    //pagination based on the current page number and rows to show per page
+    //get a slice of the csv data
+    const currentPage = data.slice(
+      (pageNum - 1) * rowsPerPage,
+      pageNum * rowsPerPage
+    );
 
-	componentDidMount = () => {
-		this.handleData(this.props.data);
-	};
+    this.setState({ currentPage, pageNum });
+  };
 
-	componentDidUpdate(prevProps) {
-		//when new csv file is uploaded
-		if (this.props.data !== prevProps.data) {
-			this.handleData(this.props.data);
-			this.sortData('Id', true);
-		}
-	}
+  sortData = (column, ascending) => {
+    const tbody = document.getElementById("tbody");
+    const rows = tbody.rows;
+    let unsorted = true;
+    // loop until no sorting to be done
+    while (unsorted) {
+      //start by saying no sorting is done:
+      unsorted = false;
 
-	render() {
-		return (
-			<section className='data'>
-				<label>
-					Show
-					<select id='rowsPerPage' onChange={this.selectRowsPerPage}>
-						<option value='20'>20</option>
-						<option value='50'>50</option>
-						<option value='100'>100</option>
-						<option value='200'>200</option>
-						{/* max set to 200 for sorting performance */}
-					</select>
-					rows per page
-				</label>
-				{/* if already at first page, disable prev button */}
-				{this.state.pageNum === 1 ? (
-					<button className='nav' disabled>
-						&lt; <span className='visuallyHidden'>previous page</span>
-					</button>
-				) : (
-					<button
-						className='nav'
-						onClick={() => {
-							this.getPage(this.state.pageNum - 1);
-						}}>
-						&lt; <span className='visuallyHidden'>previous page</span>
-					</button>
-				)}
+      //Loop through all tbody rows
+      for (let r = 0; r < rows.length - 1; r++) {
+        // getting the two values to be compared, one from the current row, one from the next row
+        const v1 = rows[r].querySelector(`.${column}`).innerHTML;
+        const v2 = rows[r + 1].querySelector(`.${column}`).innerHTML;
 
-				<label htmlFor='pageNum'>
-					<span className='visuallyHidden'>current page</span>
-					{this.state.pageNum}
-				</label>
+        //check if the two rows should switch place, based on sorting order
+        //if both values are numbers, compared by numerical value
+        //for strings, follow localeCompare() rules
+        if (
+          ascending
+            ? !isNaN(parseFloat(v1)) && !isNaN(parseFloat(v2))
+              ? parseFloat(v1) > parseFloat(v2)
+              : v1 > v2
+            : !isNaN(parseFloat(v1)) && !isNaN(parseFloat(v2))
+            ? parseFloat(v1) < parseFloat(v2)
+            : v1 < v2
+        ) {
+          // insert the sorted rows to tbody
+          tbody.insertBefore(rows[r + 1], rows[r]);
+          unsorted = true;
+        }
+      }
+    }
+  };
 
-				{this.state.pageNum === this.calcMaxPage() ? (
-					<button className='nav' disabled>
-						&gt; <span className='visuallyHidden'>next page</span>
-					</button>
-				) : (
-					<button
-						className='nav'
-						onClick={() => {
-							this.getPage(this.state.pageNum + 1);
-						}}>
-						&gt; <span className='visuallyHidden'>next page</span>
-					</button>
-				)}
-				<div className='scroll'>
-					<table>
-						<thead>
-							<tr>
-								{this.state.headers.map((header, index) => {
-									return (
-										<th
-											className='header'
-											id={`header${header.replace(/\s/g, '')}`}
-											key={`header${index}`}>
-											{header.replace(/_/g, ' ')}
-											<div className='buttons'>
-												<button
-													onClick={() => {
-														this.sortData(header.replace(/\s/g, ''), true);
-													}}
-													className='sort'>
-													<span className='visuallyHidden'>Ascending</span>▲
-												</button>
-												<button
-													onClick={() => {
-														this.sortData(header.replace(/\s/g, ''), false);
-													}}
-													className='sort'>
-													<span className='visuallyHidden'>Descending</span>▼
-												</button>
-											</div>
-										</th>
-									);
-								})}
-							</tr>
-						</thead>
-						<tbody id='tbody'>
-							{this.state.currentPage.map(row => {
-								return (
-									<tr>
-										{row.map((value, index) => {
-											return (
-												<td
-													className={`${this.state.headers[index].replace(
-														/\s/g,
-														''
-													)}`}>
-													{value}
-												</td>
-											);
-										})}
-									</tr>
-								);
-							})}
-						</tbody>
-					</table>
-				</div>
-			</section>
-		);
-	}
+  selectRowsPerPage = e => {
+    const { pageNum } = this.state;
+    // show only certain number of rows based on user's preference
+    let rowsPerPage = e.target.value;
+
+    this.setState({ rowsPerPage }, () => {
+      // if current page number exceeds the new max page number, go to the new max page
+      if (pageNum < this.calcMaxPage()) {
+        this.getPage(pageNum);
+      } else {
+        this.getPage(this.calcMaxPage());
+      }
+      this.sortData("Id", true);
+    });
+  };
+
+  componentDidMount = () => {
+    const { data } = this.props;
+    this.handleData(data);
+  };
+
+  componentDidUpdate(prevProps) {
+    const { data } = this.props;
+    //when new csv file is uploaded
+    if (data !== prevProps.data) {
+      this.handleData(data);
+      this.sortData("Id", true);
+    }
+  }
+
+  render() {
+    const { pageNum, headers, currentPage } = this.state;
+    return (
+      <section className="data">
+        <label>
+          Show
+          <select id="rowsPerPage" onChange={this.selectRowsPerPage}>
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="200">200</option>
+            {/* max set to 200 for sorting performance */}
+          </select>
+          rows per page
+        </label>
+        {/* if already at first page, disable prev button */}
+        {pageNum === 1 ? (
+          <button className="nav" disabled>
+            &lt; <span className="visuallyHidden">previous page</span>
+          </button>
+        ) : (
+          <button
+            className="nav"
+            onClick={() => {
+              this.getPage(pageNum - 1);
+            }}
+          >
+            &lt; <span className="visuallyHidden">previous page</span>
+          </button>
+        )}
+
+        <label htmlFor="pageNum">
+          <span className="visuallyHidden">current page</span>
+          {pageNum}
+        </label>
+
+        {pageNum === this.calcMaxPage() ? (
+          <button className="nav" disabled>
+            &gt; <span className="visuallyHidden">next page</span>
+          </button>
+        ) : (
+          <button
+            className="nav"
+            onClick={() => {
+              this.getPage(pageNum + 1);
+            }}
+          >
+            &gt; <span className="visuallyHidden">next page</span>
+          </button>
+        )}
+        <div className="scroll">
+          <table>
+            <thead>
+              <tr>
+                {headers.map((header, index) => {
+                  return (
+                    <th
+                      className="header"
+                      id={`header${header.replace(/\s/g, "")}`}
+                      key={`header${index}`}
+                    >
+                      {header.replace(/_/g, " ")}
+                      <div className="buttons">
+                        <button
+                          onClick={() => {
+                            this.sortData(header.replace(/\s/g, ""), true);
+                          }}
+                          className="sort"
+                        >
+                          <span className="visuallyHidden">Ascending</span>▲
+                        </button>
+                        <button
+                          onClick={() => {
+                            this.sortData(header.replace(/\s/g, ""), false);
+                          }}
+                          className="sort"
+                        >
+                          <span className="visuallyHidden">Descending</span>▼
+                        </button>
+                      </div>
+                    </th>
+                  );
+                })}
+              </tr>
+            </thead>
+            <tbody id="tbody">
+              {currentPage.map(row => {
+                return (
+                  <tr>
+                    {row.map((value, index) => {
+                      return (
+                        <td className={`${headers[index].replace(/\s/g, "")}`}>
+                          {value}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    );
+  }
 }
 
 export default DisplayData;
