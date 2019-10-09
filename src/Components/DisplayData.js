@@ -19,8 +19,7 @@ class DisplayData extends Component {
 
   handleData = data => {
 
-		console.log('handle data');
-
+	
     const { data: propsData } = this.props;
     //the first element of data array is an array of headers like id, names
     const headers = data.shift();
@@ -44,7 +43,7 @@ class DisplayData extends Component {
   };
 
   getPage = pageNum => {
-console.log('get page');
+
     const { data, rowsPerPage } = this.state;
     //pagination based on the current page number and rows to show per page
     //get a slice of the csv data
@@ -115,7 +114,7 @@ console.log('get page');
   };
 
   componentDidUpdate(prevProps) {
-		console.log('did update');
+
 		const { data } = this.props;
 		const { headers } = this.state
     //when new csv file is uploaded
@@ -128,8 +127,7 @@ console.log('get page');
 
   render() {
 		const { pageNum, headers, currentPage } = this.state;
-		console.log(headers);
-		console.log('RENDERING!!!');
+
     return (
       <section className="data">
         <label>
@@ -220,8 +218,7 @@ console.log('get page');
                 return (
                   <tr>
                     {row.map((value, index) => {
-										console.log("column index", index);
-										console.log("header[index]", headers[index]);
+										
                       return (
                         <td className={`${headers[0].replace(/\s/g, "")}`}>
                           {value}
