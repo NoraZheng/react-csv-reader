@@ -78,6 +78,10 @@ tr:nth-child(even) {
 	border: none;
 	background: transparent;
 }
+
+.nav:disabled {
+	background-color: #ccc;
+}
 .sort:hover,
 .sort:focus,
 .nav:not([disabled]):hover,

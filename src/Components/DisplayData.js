@@ -19,6 +19,8 @@ class DisplayData extends Component {
 
   handleData = data => {
 
+		console.log('handle data');
+
     const { data: propsData } = this.props;
     //the first element of data array is an array of headers like id, names
     const headers = data.shift();
@@ -42,7 +44,7 @@ class DisplayData extends Component {
   };
 
   getPage = pageNum => {
-
+console.log('get page');
     const { data, rowsPerPage } = this.state;
     //pagination based on the current page number and rows to show per page
     //get a slice of the csv data
@@ -71,7 +73,8 @@ class DisplayData extends Component {
 
         //check if the two rows should switch place, based on sorting order
         //if both values are numbers, compared by numerical value
-        //for strings, follow localeCompare() rules
+				//for strings, follow localeCompare() rules
+				
         if (
           ascending
             ? !isNaN(parseFloat(v1)) && !isNaN(parseFloat(v2))
@@ -90,7 +93,7 @@ class DisplayData extends Component {
   };
 
   selectRowsPerPage = e => {
-    const { pageNum } = this.state;
+    const { pageNum, headers } = this.state;
     // show only certain number of rows based on user's preference
     let rowsPerPage = e.target.value;
 
@@ -100,8 +103,9 @@ class DisplayData extends Component {
         this.getPage(pageNum);
       } else {
         this.getPage(this.calcMaxPage());
-      }
-      this.sortData("Id", true);
+			}
+			//sort by first column by default
+      this.sortData(headers[0], true);
     });
   };
 
@@ -111,16 +115,21 @@ class DisplayData extends Component {
   };
 
   componentDidUpdate(prevProps) {
-    const { data } = this.props;
+		console.log('did update');
+		const { data } = this.props;
+		const { headers } = this.state
     //when new csv file is uploaded
     if (data !== prevProps.data) {
-      this.handleData(data);
-      this.sortData("Id", true);
+			this.handleData(data);
+			//sort by first column by default
+      this.sortData(headers[0], true);
     }
   }
 
   render() {
-    const { pageNum, headers, currentPage } = this.state;
+		const { pageNum, headers, currentPage } = this.state;
+		console.log(headers);
+		console.log('RENDERING!!!');
     return (
       <section className="data">
         <label>
@@ -176,10 +185,12 @@ class DisplayData extends Component {
                 {headers.map((header, index) => {
                   return (
                     <th
-                      className="header"
+											className="header"
+											// remove space
                       id={`header${header.replace(/\s/g, "")}`}
                       key={`header${index}`}
                     >
+											{/* replace underscore with space */}
                       {header.replace(/_/g, " ")}
                       <div className="buttons">
                         <button
@@ -209,8 +220,10 @@ class DisplayData extends Component {
                 return (
                   <tr>
                     {row.map((value, index) => {
+										console.log("column index", index);
+										console.log("header[index]", headers[index]);
                       return (
-                        <td className={`${headers[index].replace(/\s/g, "")}`}>
+                        <td className={`${headers[0].replace(/\s/g, "")}`}>
                           {value}
                         </td>
                       );
