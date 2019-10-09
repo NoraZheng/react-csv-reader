@@ -9,19 +9,24 @@ class App extends Component {
 	constructor() {
 		super();
 		this.state = {
-			csvData: null // Set to null so other message shows if no data.
+			csvData: null, // Set to null so other message shows if no data.
+			loading: false,
+			error: ""
 		};
 	}
-
 	handleData = data => {
-		this.setState({ csvData: data });
+		this.setState({ loading: true, csvData: data }, () => {
+			this.setState({ loading: false });
+		});
 	};
 	handleError = () => {
-		alert("Something went wrong");
+		this.setState({ error: "Something went wrong!" });
 	};
 	render() {
+		const { loading, csvData, error } = this.state;
 		// Display data not needed if only show if csvData
-		const { csvData } = this.state;
+		if (loading) return <p>Loading</p>;
+		if (error) return <p>{error}</p>;
 		return (
 			<div className="App">
 				<Header />
@@ -36,7 +41,11 @@ class App extends Component {
 					<DisplayData data={csvData} />
 				) : (
 					<div className="box">
-						<p>Your CSV data will be displayed here</p>
+						{error ? (
+							<p>{error}</p>
+						) : (
+							<p>Your CSV data will be displayed here</p>
+						)}
 					</div>
 				)}
 				<Footer />
@@ -44,5 +53,4 @@ class App extends Component {
 		);
 	}
 }
-
 export default App;
