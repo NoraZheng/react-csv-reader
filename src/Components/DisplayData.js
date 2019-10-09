@@ -220,7 +220,7 @@ class DisplayData extends Component {
                     {row.map((value, index) => {
 										
                       return (
-                        <td className={`${headers[0].replace(/\s/g, "")}`}>
+                        <td className={`${headers[index].replace(/\s/g, "")}`}>
                           {value}
                         </td>
                       );
