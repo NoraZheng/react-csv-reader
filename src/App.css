@@ -5,7 +5,10 @@ html {
 body {
 	text-align: center;
 	overflow: hidden;
-	color: #191919;
+	color: #1a1c1c;
+	background-color: #f2efea;
+	font-family: 'Montserrat', sans-serif;
+	/* font-family: 'Roboto', sans-serif; */
 }
 .App {
 	display: flex;
@@ -14,8 +17,11 @@ body {
 	justify-content: space-between;
 	align-items: center;
 }
-h1 {
-	margin: 10px auto 0;
+
+h1,
+h2 {
+	text-transform: uppercase;
+	letter-spacing: 5px;
 }
 .csv-input {
 	text-align: center;
@@ -23,14 +29,14 @@ h1 {
 }
 .box {
 	height: 70vh;
-	border: 1px dotted #191919;
+	border: 1px dotted #1a1c1c;
 	width: 95%;
 }
 select {
 	margin: 0 5px;
 }
 .nav {
-	background-color: #f77487;
+	background-color: #37b018;
 	border: none;
 	padding: 5px 10px;
 	margin: 0 10px;
@@ -45,7 +51,7 @@ select {
 }
 
 table {
-	border: 1px dotted #191919;
+	border: 1px dotted #1a1c1c;
 	text-align: left;
 	overflow: auto;
 	height: 100px;
@@ -58,17 +64,19 @@ td {
 
 th {
 	position: sticky;
-	background: #f77487;
+	background: #37b018;
 	top: 0;
-	text-transform: uppercase;
 }
 td {
-	border: 1px dotted #191919;
+	border: 1px dotted #1a1c1c;
 	border-top: none;
 }
 
 tr:nth-child(even) {
-	background-color: #f5e7e5;
+	background-color: #ffffff;
+}
+tr:nth-child(odd) {
+	background-color: #e0e1e0;
 }
 
 .buttons {
@@ -94,7 +102,7 @@ footer p {
 }
 
 footer a {
-	color: #191919;
+	color: #1a1c1c;
 }
 footer a:hover,
 footer a:focus {
