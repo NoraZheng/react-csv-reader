@@ -7,9 +7,9 @@ body {
 	overflow: hidden;
 	color: #1a1c1c;
 	background-color: #f2efea;
-	/* font-family: 'Montserrat', sans-serif; */
 	font-family: 'Roboto', sans-serif;
 }
+
 .App {
 	display: flex;
 	height: 100vh;
@@ -24,12 +24,18 @@ h2 {
 	letter-spacing: 1rem;
 	margin-bottom: 0;
 }
+
 .csv-input {
 	text-align: center;
 	padding: 5px;
 }
+
+select {
+	margin: 0 0.5rem;
+}
+
 .box {
-	height: 72vh;
+	height: 78vh;
 	border: 1px dotted #1a1c1c;
 	width: 95%;
 }
@@ -43,14 +49,14 @@ h2 {
 
 .data {
 	flex-basis: 100%;
-	flex-grow: 2;
-	max-height: 75vh;
+	flex-grow: 1;
+	max-height: 78vh;
 }
 .scroll {
 	margin-top: 1rem;
 	width: 95vw;
 	overflow: auto;
-	height: 100%;
+	height: 95%;
 }
 
 table {
@@ -71,38 +77,39 @@ th {
 	background: #37b018;
 	top: 0;
 }
+.tHeader {
+	background: transparent;
+	border: none;
+	padding: 0;
+	font-weight: 700;
+}
+.nav:disabled {
+	background-color: #e0e1e0;
+}
+
+.tHeader:hover,
+.tHeader:focus,
+.nav:not([disabled]):hover,
+.nav:not([disabled]):focus {
+	color: #fff;
+	transition: color 0.2s;
+	cursor: pointer;
+}
+
 td {
 	border: 1px dotted #1a1c1c;
 	border-top: none;
 }
 
 tr:nth-child(even) {
-	background-color: #ffffff;
+	background-color: #fff;
 }
 tr:nth-child(odd) {
 	background-color: #e0e1e0;
 }
 
-.buttons {
-	display: inline;
-}
-.sort {
-	border: none;
-	background: transparent;
-}
-
-.nav:disabled {
-	background-color: #ccc;
-}
-.sort:hover,
-.sort:focus,
-.nav:not([disabled]):hover,
-.nav:not([disabled]):focus {
-	color: #f5e7e5;
-}
-
 footer {
-	padding-top: 2rem;
+	margin-top: 2rem;
 }
 
 footer a {

@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
+import TableHeader from './TableHeader';
 
 class DisplayData extends Component {
 	constructor(props) {
@@ -52,7 +53,7 @@ class DisplayData extends Component {
 	};
 
 	sortData = (column, ascending) => {
-		const tbody = document.getElementById("tbody");
+		const tbody = document.getElementById('tbody');
 		const rows = tbody.rows;
 		let unsorted = true;
 		// loop until no sorting to be done
@@ -128,92 +129,79 @@ class DisplayData extends Component {
 		const { pageNum, headers, currentPage } = this.state;
 
 		return (
-			<section className="data">
+			<section className='data'>
 				<label>
 					Show
-					<select id="rowsPerPage" onChange={this.selectRowsPerPage}>
-						<option value="20">20</option>
-						<option value="50">50</option>
-						<option value="100">100</option>
-						<option value="200">200</option>
+					<select id='rowsPerPage' onChange={this.selectRowsPerPage}>
+						<option value='20'>20</option>
+						<option value='50'>50</option>
+						<option value='100'>100</option>
+						<option value='200'>200</option>
 						{/* max set to 200 for sorting performance */}
 					</select>
 					rows per page
 				</label>
 				{/* if already at first page, disable prev button */}
 				{pageNum === 1 ? (
-					<button className="nav" disabled>
-						&lt; <span className="visuallyHidden">previous page</span>
+					<button className='nav' disabled>
+						&lt; <span className='visuallyHidden'>previous page</span>
 					</button>
 				) : (
 					<button
-						className="nav"
+						className='nav'
 						onClick={() => {
 							this.getPage(pageNum - 1);
 						}}>
-						&lt; <span className="visuallyHidden">previous page</span>
+						&lt; <span className='visuallyHidden'>previous page</span>
 					</button>
 				)}
 
-				<label htmlFor="pageNum">
-					<span className="visuallyHidden">current page</span>
+				<label htmlFor='pageNum'>
+					<span className='visuallyHidden'>current page</span>
 					{pageNum}
 				</label>
 
 				{pageNum === this.calcMaxPage() ? (
-					<button className="nav" disabled>
-						&gt; <span className="visuallyHidden">next page</span>
+					<button className='nav' disabled>
+						&gt; <span className='visuallyHidden'>next page</span>
 					</button>
 				) : (
 					<button
-						className="nav"
+						className='nav'
 						onClick={() => {
 							this.getPage(pageNum + 1);
 						}}>
-						&gt; <span className="visuallyHidden">next page</span>
+						&gt; <span className='visuallyHidden'>next page</span>
 					</button>
 				)}
-				<div className="scroll">
+				<p>
+					Click on a header to sort the table in ascending / descending order.
+				</p>
+				<div className='scroll'>
 					<table>
 						<thead>
 							<tr>
 								{headers.map((header, index) => {
 									return (
-										<th
-											className="header"
+										<TableHeader
 											// remove space
-											id={`header${header.replace(/\s/g, "")}`}
-											key={`header${index}`}>
-											{/* replace underscore with space */}
-											{header.replace(/_/g, " ")}
-											<div className="buttons">
-												<button
-													onClick={() => {
-														this.sortData(header.replace(/\s/g, ""), true);
-													}}
-													className="sort">
-													<span className="visuallyHidden">Ascending</span>▲
-												</button>
-												<button
-													onClick={() => {
-														this.sortData(header.replace(/\s/g, ""), false);
-													}}
-													className="sort">
-													<span className="visuallyHidden">Descending</span>▼
-												</button>
-											</div>
-										</th>
+											id={`header${header.replace(/\s/g, '')}`}
+											key={`header${index}`}
+											content={header.replace(/_/g, ' ')}
+											column={header.replace(/\s/g, '')}
+											sortData={this.sortData}
+										/>
 									);
 								})}
 							</tr>
 						</thead>
-						<tbody id="tbody">
+						<tbody id='tbody'>
 							{currentPage.map(row => {
 								return (
 									<tr>
 										{row.map((value, index) => {
 											return (
-												<td className={`${headers[index].replace(/\s/g, "")}`}>
+												<td className={`${headers[index].replace(/\s/g, '')}`}>
 													{value}
 												</td>
 											);
