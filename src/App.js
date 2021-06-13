@@ -19,6 +19,7 @@ class App extends Component {
 			this.setState({ loading: false });
 		});
 	};
+
 	handleError = () => {
 		this.setState({ error: "Something went wrong!" });
 	};
@@ -46,6 +47,9 @@ class App extends Component {
 						) : (
 							<p>Your CSV data will be displayed here</p>
 						)}
+						<a href="https://www.stats.govt.nz/assets/Uploads/Household-living-costs-price-indexes/Household-living-costs-price-indexes-March-2021-quarter/Download-data/Household-living-costs-price-indexes-March-2021-quarter-group-facts.csv" download>
+							Click here to download a sample .csv file (6.9KB)
+						</a>
 					</div>
 				)}
 				<Footer />
